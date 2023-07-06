@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Wrapper, Search } from './Filter.styled';
 import { useDispatch } from 'react-redux';
-import { searchContact } from '../../redux/filterSlice';
+import { searchContact } from '../../redux/filter/filterSlice';
 
 const Filter = () => {
   const [value, setValue] = useState('');

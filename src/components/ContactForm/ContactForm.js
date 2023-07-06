@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
-import { selectContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { Form, Name, Number, Submit, Wrapper } from './ContactForm.styled';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/operators';
+import { addContact } from 'redux/contacts/contactsOperators';
+import toast from 'react-hot-toast';
 
 function ContactForm() {
   const [name, setName] = useState('');
@@ -16,7 +16,6 @@ function ContactForm() {
     evt.preventDefault();
 
     const contact = {
-      id: nanoid(),
       name,
       number,
     };
@@ -31,10 +30,13 @@ function ContactForm() {
   };
 
   const isAddedContact = contact => {
+    const notifyError = () =>
+      toast.error(`${contact.name} "is already in exists"`);
     if (addedContacts.length !== 0) {
       for (const addcontact of addedContacts) {
-        if (addcontact.contact.name.includes(contact.name)) {
-          alert(`${contact.name} "is already in contacts"`);
+        if (addcontact.name.includes(contact.name)) {
+          notifyError();
+          // alert(`${contact.name} "is already in contacts"`);
           return true;
         } else {
           return false;

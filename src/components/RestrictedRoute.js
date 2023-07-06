@@ -1,0 +1,14 @@
+import { useUser } from 'hooks';
+import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+export const RestrictedRoute = ({ component: Component, redirectTo = '/' }) => {
+  const { isLogin } = useUser();
+
+  return isLogin ? <Navigate to={redirectTo} /> : Component;
+};
+
+RestrictedRoute.propTypes = {
+  Component: PropTypes.array.isRequired,
+  redirectTo: PropTypes.string.isRequired,
+}
